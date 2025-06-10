@@ -13,7 +13,7 @@ router.get("/", auth.verifyAuthToken, (req, res) => {
       etc.display_name AS name,
       COALESCE(ets.subcategories, 0) AS subcategories,
       etc.created_on AS createdOn, 
-      (SELECT etud.display_name FROM et_user_details WHERE etud.user_id = etc.created_by LIMIT 1) AS createdBy
+      ANY_VALUE(etud.display_name) AS createdBy
     FROM
       et_categories etc
       LEFT JOIN (
